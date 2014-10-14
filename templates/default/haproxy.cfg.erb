@@ -1,0 +1,38 @@
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    option redispatch
+    option  http-server-close
+    timeout connect  5000
+    timeout client  50000
+    timeout server  50000
+
+listen stats :9000
+    mode http
+    stats enable
+    stats uri /_haproxy
+
+frontend http
+  bind *:80
+  mode http
+  timeout client 120s
+  option forwardfor
+  option  http-server-close
+  option http-pretend-keepalive
+  <% node['consul']['catalog']['service'].each do |name,data| -%>
+    <% if data[0]['ServiceTags'].include? 'codebox' -%>
+      acl host_<%= name %> hdr_beg(host) -i <%= name %> 
+      use_backend <%= name %> if host_<%= name %> 
+    <% end -%>
+  <% end -%>
+
+<% node['consul']['catalog']['service'].each do |name,data| -%>
+  <% if data[0]['ServiceTags'].include? 'codebox' -%>
+  backend <%= name %> 
+    timeout server 120s
+    server <%= data[0]['Node'] %>.<%= node['domain'] %>:<%= data[0]['ServicePort'] %> <%= data[0]['Node'] %>.<%= node['domain'] %>:<%= data[0]['ServicePort'] %> check
+  <% end -%>
+<% end -%>

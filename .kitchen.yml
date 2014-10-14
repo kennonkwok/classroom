@@ -1,0 +1,16 @@
+---
+driver:
+  name: vagrant
+  network:
+  - ["private_network", {ip: "192.168.24.233"}]
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    run_list: ["ohai", "classroom"]
+    attributes:
