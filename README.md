@@ -1,42 +1,6 @@
-# codebox-cookbook-cookbook
-
-TODO: Enter the cookbook description here.
-
-## Supported Platforms
-
-TODO: List your supported platforms.
-
-## Attributes
-
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['codebox-cookbook']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
-
-## Usage
-
-### codebox-cookbook::default
-
-Include `codebox-cookbook` in your node's `run_list`:
-
-```json
-{
-  "run_list": [
-    "recipe[codebox-cookbook::default]"
-  ]
-}
-```
-
-## License and Authors
-
-Author:: YOUR_NAME (<YOUR_EMAIL>)
+# Demo codebox classroom cookbook
+  - sets up consul service registry
+  - uses docker cookbook to pull and run images
+  - uses progrium/registrator to register containers with consul
+  - uses fujiwara/ohai-plugin-consul 
+  - runs haproxy on the docker host to route requests
