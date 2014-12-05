@@ -8,7 +8,7 @@ end
   docker_container container_id do
     image 'kennonkwok/codebox'
     container_name container_id
-    env ["SERVICE_NAME=#{container_id}", "SERVICE_TAGS=codebox"]
+    env ["SERVICE_NAME=#{container_uid}", "SERVICE_TAGS=codebox"]
     publish_exposed_ports true
     detach true
     command '-u chef:chef run chef-training'
