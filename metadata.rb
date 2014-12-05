@@ -7,5 +7,6 @@ long_description 'Installs/Configures codebox classroom'
 version          '0.3.4'
 
 depends 'build-essential'
-depends 'docker'
+depends 'docker', '= 0.36.0'
+depends 'consul'
 depends 'ohai'
