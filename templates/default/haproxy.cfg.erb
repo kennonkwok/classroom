@@ -23,16 +23,16 @@ frontend http
   option  http-server-close
   option http-pretend-keepalive
   <% node['consul']['catalog']['service'].each do |name,data| -%>
-    <% if data[0]['ServiceTags'].include? 'codebox' -%>
+    <% if data[0]['ServiceTags'].to_a.include? 'codebox' -%>
       acl host_<%= name %> hdr_beg(host) -i <%= name %> 
       use_backend <%= name %> if host_<%= name %> 
     <% end -%>
   <% end -%>
 
 <% node['consul']['catalog']['service'].each do |name,data| -%>
-  <% if data[0]['ServiceTags'].include? 'codebox' -%>
+  <% if data[0]['ServiceTags'].to_a.include? 'codebox' -%>
   backend <%= name %> 
     timeout server 120s
-    server <%= data[0]['Node'] %>.<%= node['domain'] %>:<%= data[0]['ServicePort'] %> <%= data[0]['Node'] %>.<%= node['domain'] %>:<%= data[0]['ServicePort'] %> check
+    server <%= data[0]['Node'] %>:<%= data[0]['ServicePort'] %> <%= data[0]['Node'] %>:<%= data[0]['ServicePort'] %> check
   <% end -%>
 <% end -%>
